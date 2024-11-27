@@ -12,19 +12,19 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->D:\AndroidStudioProjects\tmp\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:5-66
-14-->D:\AndroidStudioProjects\tmp\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:22-64
+14-->D:\sjh\three\android\project\dietManagement\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:5-66
+14-->D:\sjh\three\android\project\dietManagement\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:22-64
 15
 16    <permission
-16-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:22:5-24:47
+16-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:22:5-24:47
 17        android:name="com.example.best_flutter_ui_templates.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-17-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:23:9-81
+17-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:23:9-81
 18        android:protectionLevel="signature" />
-18-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:24:9-44
+18-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:24:9-44
 19
 20    <uses-permission android:name="com.example.best_flutter_ui_templates.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-20-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:26:5-97
-20-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:26:22-94
+20-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:26:22-94
 21    <!--
 22 io.flutter.app.FlutterApplication is an android.app.Application that
 23         calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -35,7 +35,7 @@
 28    <application
 29        android:name="android.app.Application"
 30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-30-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:28:18-86
+30-->[androidx.core:core:1.10.1] C:\Users\Owner\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:28:18-86
 31        android:debuggable="true"
 32        android:icon="@mipmap/ic_launcher"
 33        android:label="Best Flutter UI Templates" >
@@ -84,109 +84,109 @@
 76            android:value="2" />
 77
 78        <provider
-78-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
+78-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
 79            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-79-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
+79-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
 80            android:authorities="com.example.best_flutter_ui_templates.flutter.image_provider"
-80-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
+80-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
 81            android:exported="false"
-81-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
+81-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
 82            android:grantUriPermissions="true" >
-82-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
+82-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
 83            <meta-data
-83-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
+83-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
 84                android:name="android.support.FILE_PROVIDER_PATHS"
-84-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
+84-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
 85                android:resource="@xml/flutter_image_picker_file_paths" />
-85-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
+85-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
 86        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
 87        <service
-87-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
+87-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
 88            android:name="com.google.android.gms.metadata.ModuleDependencies"
-88-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
+88-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
 89            android:enabled="false"
-89-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
+89-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
 90            android:exported="false" >
-90-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
+90-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
 91            <intent-filter>
-91-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
+91-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
 92                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
-92-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
-92-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
+92-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
+92-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
 93            </intent-filter>
 94
 95            <meta-data
-95-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
+95-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
 96                android:name="photopicker_activity:0:required"
-96-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
+96-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
 97                android:value="" />
-97-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
+97-->[:image_picker_android] D:\sjh\three\android\project\dietManagement\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
 98        </service>
 99
 100        <uses-library
-100-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+100-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
 101            android:name="androidx.window.extensions"
-101-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+101-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
 102            android:required="false" />
-102-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+102-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
 103        <uses-library
-103-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+103-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
 104            android:name="androidx.window.sidecar"
-104-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+104-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
 105            android:required="false" />
-105-->[androidx.window:window:1.0.0-beta04] C:\Users\doxoxd\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+105-->[androidx.window:window:1.0.0-beta04] C:\Users\Owner\.gradle\caches\transforms-3\9f1d213d720309c6a1939a60cff6e9ed\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
 106
 107        <provider
-107-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
 108            android:name="androidx.startup.InitializationProvider"
-108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
+108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
 109            android:authorities="com.example.best_flutter_ui_templates.androidx-startup"
-109-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
 110            android:exported="false" >
-110-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
 111            <meta-data
-111-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+111-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
 112                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
 113                android:value="androidx.startup" />
-113-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
 114        </provider>
 115
 116        <receiver
-116-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
 117            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-117-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+117-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
 118            android:directBootAware="false"
-118-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+118-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
 119            android:enabled="true"
-119-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
 120            android:exported="true"
-120-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+120-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
 121            android:permission="android.permission.DUMP" >
-121-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+121-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
 122            <intent-filter>
-122-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
 123                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-123-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-123-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+123-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+123-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
 124            </intent-filter>
 125            <intent-filter>
-125-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+125-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
 126                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-126-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-126-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+126-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+126-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
 127            </intent-filter>
 128            <intent-filter>
-128-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+128-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
 129                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
 130            </intent-filter>
 131            <intent-filter>
-131-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
 132                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\doxoxd\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Owner\.gradle\caches\transforms-3\a66d3b14ea960bbb6e6c5bc6d7583c7a\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
 133            </intent-filter>
 134        </receiver>
 135    </application>

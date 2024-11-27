@@ -8,7 +8,6 @@ import './signup.dart';
 import '../widgets/custom_checkbox.dart';
 import '../widgets/input_field.dart';
 import '../widgets/primary_button.dart';
-
 import '../app_theme.dart';
 
 class LoginScreen extends StatefulWidget {

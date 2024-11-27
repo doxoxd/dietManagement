@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import '../cubit/auth_cubit.dart';
 import '../model/user.dart';
@@ -36,6 +37,10 @@ class AuthService {
     required var password,
     required var nickname,
     required int age,
+    required var gender,
+    required double kcal,
+    required double height,
+    required double weight
   }) async {
     final response = await http.post(
       Uri.parse(API.signup), // 회원가입 API 엔드포인트
@@ -49,6 +54,10 @@ class AuthService {
         'password': password,
         'nickname': nickname,
         'age' :age,
+        'gender' : gender,
+        'kcal' : kcal,
+        'height' : height,
+        'weight' : weight
       }),
     );
 

@@ -61,9 +61,9 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      // home: IntroductionAnimationScreen(),
+       home: IntroductionAnimationScreen(),
       // home: LoginScreen(),
-      home: HomeScreen(),
+      //home: HomeScreen(),
       // home: DesignCourseHomeScreen(),
     );
   }
