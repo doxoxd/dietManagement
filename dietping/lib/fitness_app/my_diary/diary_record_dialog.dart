@@ -8,7 +8,9 @@ import 'food_add_dialog.dart';
 import 'package:http/http.dart' as http;
 
 class DiaryRecordDialog extends StatefulWidget {
-  const DiaryRecordDialog({Key? key}) : super(key: key);
+  final DateTime selectedDate;
+
+  const DiaryRecordDialog({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   _DiaryRecordDialogState createState() => _DiaryRecordDialogState();
@@ -20,6 +22,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
   List<XFile> selectedImages = []; // 선택된 이미지 목록
   final ImagePicker picker = ImagePicker(); // 이미지 선택 도구
   List<List<dynamic>> addedFoods = [];
+  // final DateTime selectedDate;
 
   // 갤러리 또는 카메라에서 이미지 선택
   Future<void> _selectMultipleImages() async {
@@ -52,15 +55,12 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
     }
   }
 
-/*
-  Future<void> diarySave({required bool withImage}) async {
+/*  Future<void> diarySave({required bool withImage}) async {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(API.insertMenu));
 
-
     }
-  }
-*/
+  }*/
 
 
   // 이미지 삭제
@@ -110,7 +110,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
             // 제목
             Center(
               child: Text(
-                "${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일 식단",
+                "${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일 식단",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

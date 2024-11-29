@@ -597,7 +597,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
       ),
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return DiaryRecordDialog(); // 다이얼로그 호출
+        return DiaryRecordDialog(selectedDate: selectedDate); // 다이얼로그 호출
       },
     );
   }
