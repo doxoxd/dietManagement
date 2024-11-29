@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class FoodAddDialog extends StatefulWidget {
-  const FoodAddDialog({Key? key}) : super(key: key);
+  final Function(List<dynamic>) onFoodAdded;
+
+  const FoodAddDialog({
+    Key? key,
+    required this.onFoodAdded,
+  }) : super(key: key);
 
   @override
   _FoodAddDialogState createState() => _FoodAddDialogState();

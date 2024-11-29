@@ -1,36 +1,80 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/api.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'food_add_dialog.dart';
+import 'package:http/http.dart' as http;
 
-class FoodSearchDialog extends StatelessWidget {
+
+class FoodSearchDialog extends StatefulWidget {
   final VoidCallback onDirectAdd;
   final Function(String searchText) onSearch;
+  final Function(List<dynamic> food) onFoodAdded; // 음식을 추가하는 콜백
 
   const FoodSearchDialog({
     Key? key,
     required this.onDirectAdd,
     required this.onSearch,
+    required this.onFoodAdded,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
+  _FoodSearchDialogState createState() => _FoodSearchDialogState();
+}
 
+class _FoodSearchDialogState extends State<FoodSearchDialog> {
+  TextEditingController searchController = TextEditingController();
+  List<List<dynamic>> searchResults = [];
+  bool isLoading = false; // 로딩 상태 표시
+
+  void searchFood(String text) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      var res = await http.post(
+        Uri.parse(API.searchFood),
+        body: {'name': searchController.text},
+      );
+      if (res.statusCode == 200) {
+        var resLoadD = jsonDecode(res.body);
+        if (resLoadD['result'] == 'true') {
+          setState(() {
+            searchResults = (resLoadD['food_info'] as List).cast<List<dynamic>>();
+          });
+        }
+      } else {
+        print('Failed to load data');
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    } finally {
+      setState(() {
+        isLoading = false; // 로딩 종료
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Theme(
       data: ThemeData.light().copyWith(
-        primaryColor: Color(0xFF759CE6), // 주요 색상
-        hintColor: Colors.grey, // 힌트 색상
+        primaryColor: Color(0xFF759CE6),
+        hintColor: Colors.grey,
         colorScheme: ColorScheme.light(primary: Color(0xFF759CE6)),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF759CE6), // 버튼 배경색
-            foregroundColor: Colors.white, // 버튼 텍스트 및 아이콘 색상
+            backgroundColor: Color(0xFF759CE6),
+            foregroundColor: Colors.white,
           ),
         ),
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white, // Dialog 배경색 흰색으로 설정
+          color: Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
@@ -41,17 +85,15 @@ class FoodSearchDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 상단 제목
             Text(
               "음식 검색",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF759CE6), // 제목 색상
+                color: Color(0xFF759CE6),
               ),
             ),
             const SizedBox(height: 16),
-            // 검색 창
             Row(
               children: [
                 Expanded(
@@ -60,98 +102,55 @@ class FoodSearchDialog extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       hintText: "검색할 음식명 입력",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          if (searchController.text.isNotEmpty) {
+                            searchFood(searchController.text);
+                          }
+                        },
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey),
                       ),
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
                       filled: true,
-                      fillColor: Colors.grey[200], // 입력 필드 배경 흰색 계열
+                      fillColor: Colors.grey[200],
                     ),
-                    onSubmitted: (value) => onSearch(value),
                   ),
                 ),
                 const SizedBox(width: 8),
                 TextButton(
-                  onPressed: () => Navigator.pop(context), // 닫기 버튼
-                  child: Text(
-                    "닫기",
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("닫기", style: TextStyle(color: Colors.grey)),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            // 직접 추가 버튼
-            ElevatedButton.icon(
-              onPressed: () {
-                // "직접 추가" 선택 시 FoodAddDialog 표시
-                showModalBottomSheet(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                  ),
-                  isScrollControlled: true, // 다이얼로그 높이를 키보드와 연동
-                  builder: (BuildContext context) {
-                    return FoodAddDialog(); // FoodAddDialog 호출
+            if (isLoading)
+              Center(child: CircularProgressIndicator())
+            else if (searchResults.isEmpty)
+              Center(child: Text("검색 결과가 없습니다."))
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: searchResults.length,
+                  itemBuilder: (context, index) {
+                    final food = searchResults[index];
+                    return ListTile(
+                      title: Text(food[1]),
+                      subtitle: Text(
+                          '칼로리: ${food[2]} Kcal | 탄수화물: ${food[3]}g | 단백질: ${food[4]}g | 지방: ${food[5]}g'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          widget.onFoodAdded(food); // 음식 추가
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
                   },
-                );
-              },
-              icon: Icon(Icons.add, size: 20),
-              label: Text("직접 추가"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF759CE6), // 버튼 배경색
-                foregroundColor: Colors.white, // 버튼 텍스트 색상
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
-            ),
-
-            const SizedBox(height: 16),
-            // 탭 선택 영역
-            DefaultTabController(
-              length: 2,
-              child: Column(
-                children: [
-                  TabBar(
-                    tabs: [
-                      Tab(text: "최근 먹은"),
-                      Tab(text: "직접 추가한"),
-                    ],
-                    labelColor: Color(0xFF759CE6),
-                    unselectedLabelColor: Colors.grey,
-                    indicatorColor: Color(0xFF759CE6),
-                  ),
-                  const SizedBox(height: 16),
-                  // 탭 내용 (예시로 비어 있음)
-                  Container(
-                    height: 200, // 탭 내용 높이 설정
-                    child: TabBarView(
-                      children: [
-                        Center(
-                          child: Text(
-                            "최근 먹은 음식이 없습니다.",
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            "직접 추가한 음식이 없습니다.",
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

@@ -1,27 +1,70 @@
 // 기록한 영양 성분 보여주는 부분
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/api.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'dart:math' as math;
 
-class MediterranesnDietView extends StatelessWidget {
+import '../../model/loaduser.dart';
+
+class TotalView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final DateTime selectedDate;
 
-  const MediterranesnDietView(
-      {Key? key, this.animationController, this.animation})
+  const TotalView({Key? key, this.animationController, this.animation, required this.selectedDate})
       : super(key: key);
+
+  @override
+  _TotalViewState createState() => _TotalViewState();
+}
+
+class _TotalViewState extends State<TotalView> {
+  Map<String, dynamic>? userData;
+  String? userId;
+  // DateTime? selectedDay;
+  List<List<dynamic>> data = [];
+
+  void loadUserDiary() async {
+    userData = (await LoadUser.loadUser()) as Map<String, dynamic>?;
+    userId = userData?['id'];
+
+    try {
+      var res = await http.post(
+          Uri.parse(API.loadUserDiary),
+          body: {
+            'id': userId,
+          }
+      );
+      if (res.statusCode == 200) {
+        var resLoadD = jsonDecode(res.body);
+        if (resLoadD['diary'] == 'true') {
+          data = (resLoadD['diary_info'] as List).cast<List<dynamic>>();
+          setState(() {});
+        } else {
+          Fluttertoast.showToast(msg: '');
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController!,
+      animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-          opacity: animation!,
+          opacity: widget.animation!,
           child: new Transform(
             transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+                0.0, 30 * (1.0 - widget.animation!.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 16, bottom: 18),
@@ -44,7 +87,7 @@ class MediterranesnDietView extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 16, left: 16, right: 16),
+                      const EdgeInsets.only(top: 16, left: 16, right: 16),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -69,9 +112,9 @@ class MediterranesnDietView extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -81,7 +124,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
-                                                      FitnessAppTheme.fontName,
+                                                  FitnessAppTheme.fontName,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 16,
                                                   letterSpacing: -0.1,
@@ -92,9 +135,9 @@ class MediterranesnDietView extends StatelessWidget {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              CrossAxisAlignment.end,
                                               children: <Widget>[
                                                 Opacity(
                                                   opacity: 0.5, // 0.0에서 1.0 사이 값으로 조절 가능 (여기선 50% 불투명도)
@@ -106,17 +149,17 @@ class MediterranesnDietView extends StatelessWidget {
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                  const EdgeInsets.only(
+                                                      left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(1175 * animation!.value).toInt()}',
+                                                    '${(1175 * widget.animation!.value).toInt()}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
-                                                              .fontName,
+                                                      FitnessAppTheme
+                                                          .fontName,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       fontSize: 16,
                                                       color: FitnessAppTheme
                                                           .darkerText,
@@ -125,17 +168,17 @@ class MediterranesnDietView extends StatelessWidget {
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                  const EdgeInsets.only(
+                                                      left: 4, bottom: 3),
                                                   child: Text(
                                                     'Kcal',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
-                                                              .fontName,
+                                                      FitnessAppTheme
+                                                          .fontName,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       fontSize: 12,
                                                       letterSpacing: -0.2,
                                                       color: FitnessAppTheme
@@ -167,12 +210,12 @@ class MediterranesnDietView extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all (8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -182,7 +225,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
-                                                      FitnessAppTheme.fontName,
+                                                  FitnessAppTheme.fontName,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 16,
                                                   letterSpacing: -0.1,
@@ -193,9 +236,9 @@ class MediterranesnDietView extends StatelessWidget {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              CrossAxisAlignment.end,
                                               children: <Widget>[
                                                 Opacity(
                                                   opacity: 0.5, // 0.0에서 1.0 사이 값으로 조절 가능 (여기선 50% 불투명도)
@@ -207,17 +250,17 @@ class MediterranesnDietView extends StatelessWidget {
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                  const EdgeInsets.only(
+                                                      left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(64 * animation!.value).toInt()}',
+                                                    '${(64 * widget.animation!.value).toInt()}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
-                                                              .fontName,
+                                                      FitnessAppTheme
+                                                          .fontName,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       fontSize: 16,
                                                       color: FitnessAppTheme
                                                           .darkerText,
@@ -226,17 +269,17 @@ class MediterranesnDietView extends StatelessWidget {
                                                 ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 5, bottom: 3),
+                                                  const EdgeInsets.only(
+                                                      left: 5, bottom: 3),
                                                   child: Text(
                                                     'g',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
-                                                              .fontName,
+                                                      FitnessAppTheme
+                                                          .fontName,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       fontSize: 12,
                                                       letterSpacing: -0.2,
                                                       color: FitnessAppTheme
@@ -280,16 +323,16 @@ class MediterranesnDietView extends StatelessWidget {
                                       ),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            '${(425 * animation!.value).toInt()}',
+                                            '${(425 * widget.animation!.value).toInt()}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
-                                                  FitnessAppTheme.fontName,
+                                              FitnessAppTheme.fontName,
                                               fontWeight: FontWeight.normal,
                                               fontSize: 24,
                                               letterSpacing: 0.0,
@@ -302,7 +345,7 @@ class MediterranesnDietView extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
-                                                  FitnessAppTheme.fontName,
+                                              FitnessAppTheme.fontName,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,
                                               letterSpacing: 0.0,
@@ -325,7 +368,7 @@ class MediterranesnDietView extends StatelessWidget {
                                           ],
                                           angle: 260 +
                                               (360 - 260) *
-                                                  (1.0 - animation!.value)),
+                                                  (1.0 - widget.animation!.value)),
                                       child: SizedBox(
                                         width: 108,
                                         height: 108,
@@ -380,14 +423,14 @@ class MediterranesnDietView extends StatelessWidget {
                                     width: 70,
                                     decoration: BoxDecoration(
                                       color:
-                                          HexColor('#86e1e0').withOpacity(0.2),
+                                      HexColor('#86e1e0').withOpacity(0.2),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(4.0)),
                                     ),
                                     child: Row(
                                       children: <Widget>[
                                         Container(
-                                          width: ((70 / 1) * animation!.value),
+                                          width: ((70 / 1) * widget.animation!.value),
                                           height: 4,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(colors: [
@@ -413,7 +456,7 @@ class MediterranesnDietView extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color:
-                                          FitnessAppTheme.grey.withOpacity(0.5),
+                                      FitnessAppTheme.grey.withOpacity(0.5),
                                     ),
                                   ),
                                 ),
@@ -455,11 +498,11 @@ class MediterranesnDietView extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               width: ((70 / 1) *
-                                                  animationController!.value),
+                                                  widget.animationController!.value),
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:
-                                                    LinearGradient(colors: [
+                                                LinearGradient(colors: [
                                                   HexColor('#c5ea8b')
                                                       .withOpacity(1.0),
                                                   HexColor('#c5ea8b'),
@@ -526,11 +569,11 @@ class MediterranesnDietView extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               width: ((70 / 1) *
-                                                  animationController!.value),
+                                                  widget.animationController!.value),
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:
-                                                    LinearGradient(colors: [
+                                                LinearGradient(colors: [
                                                   HexColor('#FFCC66')
                                                       .withOpacity(1.0),
                                                   HexColor('#FFCC66'),
@@ -597,7 +640,7 @@ class MediterranesnDietView extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               width: ((70 / 1) *
-                                                  animationController!.value),
+                                                  widget.animationController!.value),
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:

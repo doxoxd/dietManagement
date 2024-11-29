@@ -1,14 +1,21 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/api.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/diary_record_dialog.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_dialog.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/body_measurement.dart';
-import 'package:best_flutter_ui_templates/fitness_app/ui_view/mediterranean_diet_view.dart';
+import 'package:best_flutter_ui_templates/fitness_app/ui_view/total_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+
 // import 'package:image_picker/image_picker.dart';
 
+import '../../model/loaduser.dart';
 import 'body_info_dialog.dart';
 import 'food_search_dialog.dart';
 
@@ -20,13 +27,15 @@ class MyDiaryScreen extends StatefulWidget {
   _MyDiaryScreenState createState() => _MyDiaryScreenState();
 }
 
-class _MyDiaryScreenState extends State<MyDiaryScreen>
-    with TickerProviderStateMixin {
+class _MyDiaryScreenState extends State<MyDiaryScreen> {
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+  String? userId; // 유저 ID 저장
+  Map<String, dynamic>? userData;
+  List<List<dynamic>> data = [];
 
   // 현재 선택된 날짜
   DateTime selectedDate = DateTime.now();
@@ -40,6 +49,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
 
   @override
   void initState() {
+    _loadUserId(); // 유저 ID 로드
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: widget.animationController!,
@@ -70,6 +80,38 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     });
     super.initState();
   }
+
+  // 유저 ID를 서버에서 가져오는 메서드
+  Future<void> _loadUserId() async {
+    userData = (await LoadUser.loadUser()) as Map<String, dynamic>?;
+    userId = userData?['id'];
+
+    try {
+      var res = await http.post(
+          Uri.parse(API.loadUser),
+          body: {
+            'id': userId,
+          }
+      );
+      if (res.statusCode == 200) {
+        var resLoadD = jsonDecode(res.body);
+        if (resLoadD['result'] == 'true') {
+          setState(() {
+            data = (resLoadD['user_info'] as List).cast<List<dynamic>>();
+            print(data);
+          });
+          addAllListData(); // 유저 ID 로드 후 리스트 데이터 다시 추가
+        } else {
+          print("유저 정보 로드 실패");
+        }
+      } else {
+        print("HTTP 요청 실패");
+      }
+    } catch (e) {
+      print("에러 발생: $e");
+    }
+  }
+
 
   // 날짜를 전날로 변경
   void _previousDay() {
@@ -127,14 +169,23 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       ),
     );
     listViews.add(
-      MediterranesnDietView(
+      TotalView(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+        selectedDate: selectedDate, // 선택한 날짜만 전달
+      ),
+    );
+    /*listViews.add(
+      TotalView(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
                 Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
+        animationController: widget.animationController!, userId: '', selectedDate: '',
       ),
-    );
+    );*/
     listViews.add(
       Padding(
         padding: const EdgeInsets.only(right: 15.0),
@@ -198,77 +249,18 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
     listViews.add(
       Padding(
-        padding: const EdgeInsets.only(right: 15.0), // 좌우 여백 추가
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TitleView(
-                titleTxt: '신체 정보',
-                subTxt: '',
-                animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-                  CurvedAnimation(
-                    parent: widget.animationController!,
-                    curve: Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn),
-                  ),
-                ),
-                animationController: widget.animationController!,
-              ),
-            ),
-            Row(
-              children: [
-                TextButton(
-                  onPressed: _showBodyInfoDialog, // 다이얼로그 호출
-                  child: Row(
-                    children: [
-                      Text(
-                        "Edit",
-                        style: TextStyle(
-                          fontFamily: FitnessAppTheme.fontName,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                          letterSpacing: 0.5,
-                          color: FitnessAppTheme.nearlyDarkBlue,
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: FitnessAppTheme.darkText,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        )
-      ),
-    );
-    listViews.add(
-      BodyMeasurementView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-            Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-        Padding(
-          padding: const EdgeInsets.only(right: 15.0),
+          padding: const EdgeInsets.only(right: 15.0), // 좌우 여백 추가
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: TitleView(
-                  titleTxt: '물 섭취',
+                  titleTxt: '신체 정보',
                   subTxt: '',
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
                       parent: widget.animationController!,
-                      curve: Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn),
+                      curve: Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn),
                     ),
                   ),
                   animationController: widget.animationController!,
@@ -277,7 +269,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
               Row(
                 children: [
                   TextButton(
-                    onPressed: _showWaterDialog, // WaterDialog 연결
+                    onPressed: _showBodyInfoDialog, // 다이얼로그 호출
                     child: Row(
                       children: [
                         Text(
@@ -302,9 +294,68 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                 ],
               ),
             ],
-          ),
+          )
+      ),
+    );
+    listViews.add(
+      BodyMeasurementView(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve:
+            Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+    listViews.add(
+      Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: TitleView(
+                titleTxt: '물 섭취',
+                subTxt: '',
+                animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                  CurvedAnimation(
+                    parent: widget.animationController!,
+                    curve: Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn),
+                  ),
+                ),
+                animationController: widget.animationController!,
+              ),
+            ),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: _showWaterDialog, // WaterDialog 연결
+                  child: Row(
+                    children: [
+                      Text(
+                        "Edit",
+                        style: TextStyle(
+                          fontFamily: FitnessAppTheme.fontName,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          letterSpacing: 0.5,
+                          color: FitnessAppTheme.nearlyDarkBlue,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: FitnessAppTheme.darkText,
+                        size: 18,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-      );
+      ),
+    );
 
 
     listViews.add(

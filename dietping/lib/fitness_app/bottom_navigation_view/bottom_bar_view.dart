@@ -4,6 +4,7 @@ import 'package:best_flutter_ui_templates/fitness_app/models/tabIcon_data.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
+import '../../hotel_booking/addrecipe.dart';
 import '../../main.dart';
 import '../models/tabIcon_data.dart';
 
@@ -139,7 +140,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         CurvedAnimation(
                             parent: animationController!,
                             curve: Curves.fastOutSlowIn)),
-                    child: Container(
+                    child: Container(                //
                       // alignment: Alignment.center,s
                       decoration: BoxDecoration(
                         color: FitnessAppTheme.nearlyDarkBlue,
@@ -165,7 +166,15 @@ class _BottomBarViewState extends State<BottomBarView>
                           splashColor: Colors.white.withOpacity(0.1),
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
-                          onTap: widget.addClick,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddRecipe(), // 이동할 페이지
+                              ),
+                            );
+                          },
+                          //onTap: widget.addClick,
                           child: Icon(
                             Icons.add,
                             color: FitnessAppTheme.white,

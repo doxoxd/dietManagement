@@ -1,4 +1,4 @@
-#Thu Nov 28 06:12:38 KST 2024
+#Sat Nov 30 04:03:13 KST 2024
 base.0=D\:\\sjh\\three\\android\\project\\dietManagement\\dietManagement\\dietping\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

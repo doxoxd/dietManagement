@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [
         const Locale('ko', 'KR'),
+        const Locale('en', 'US'),
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -61,8 +62,8 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-       home: IntroductionAnimationScreen(),
-      // home: LoginScreen(),
+       //home: IntroductionAnimationScreen(),
+      home: LoginScreen(),
       //home: HomeScreen(),
       // home: DesignCourseHomeScreen(),
     );

@@ -1,11 +1,13 @@
 import 'package:best_flutter_ui_templates/design_course/category_list_view.dart';
 import 'package:best_flutter_ui_templates/design_course/course_info_screen.dart';
+import 'package:best_flutter_ui_templates/design_course/popular_course_list.dart';
 import 'package:best_flutter_ui_templates/design_course/popular_course_list_view.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import '../hotel_booking/filters_screen.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 import 'design_course_app_theme.dart';
+import 'models/category.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
   @override
@@ -217,8 +219,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           ),
           Flexible(
             child: PopularCourseListView(
-              callBack: () {
-                moveTo();
+              callBack: (String category) {
+                moveTo(category);
               },
             ),
           )
@@ -227,11 +229,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  void moveTo() {
+  void moveTo(String category) {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => CourseInfoScreen(),
+        builder: (BuildContext context) =>PopularCourseList(menucode: category),
       ),
     );
   }

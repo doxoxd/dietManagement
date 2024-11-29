@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class PopularCourseListView extends StatefulWidget {
   const PopularCourseListView({Key? key, this.callBack}) : super(key: key);
 
-  final Function()? callBack;
+  // 수정된 부분: callBack의 타입을 Category와 Animation<double>을 받는 함수로 수정
+  final Function(String)? callBack;
   @override
   _PopularCourseListViewState createState() => _PopularCourseListViewState();
 }
@@ -84,10 +85,12 @@ class CategoryView extends StatelessWidget {
       this.callback})
       : super(key: key);
 
-  final VoidCallback? callback;
+  //final VoidCallback? callback;
+  final Function(String)? callback;
   final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,59 +104,65 @@ class CategoryView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation!.value), 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: callback,
-              child: SizedBox(
-                height: 280,
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: HexColor('#F8FAFB'),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
-                                // border: new Border.all(
-                                //     color: DesignCourseAppTheme.notWhite),
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 16, left: 16, right: 16),
-                                            child: Text(
-                                              category!.title,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme
-                                                    .darkerText,
+              onTap: () {
+                // category.code가 null이 아닌지 확인 후 callback 호출
+                if (category?.code != null) {
+                  callback!(category!.code);  // category.code 전달
+                }
+              },
+                child:
+                SizedBox(
+                  height: 280,
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: HexColor('#F8FAFB'),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(16.0)),
+                                  // border: new Border.all(
+                                  //     color: DesignCourseAppTheme.notWhite),
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16, left: 16, right: 16),
+                                              child: Text(
+                                                category!.title,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  letterSpacing: 0.27,
+                                                  color: DesignCourseAppTheme
+                                                      .darkerText,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8,
-                                                left: 16,
-                                                right: 16,
-                                                bottom: 8),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: <Widget>[
-                                                /*Text(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8,
+                                                  left: 16,
+                                                  right: 16,
+                                                  bottom: 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  /*Text(
                                                   '${category!.lessonCount} lesson',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
@@ -164,10 +173,10 @@ class CategoryView extends StatelessWidget {
                                                         .grey,
                                                   ),
                                                 ),*/
-                                                Container(
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      /*Text(
+                                                  Container(
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        /*Text(
                                                         '${category!.rating}',
                                                         textAlign:
                                                             TextAlign.left,
@@ -188,58 +197,58 @@ class CategoryView extends StatelessWidget {
                                                                 .nearlyBlue,
                                                         size: 20,
                                                       ),*/
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 48,
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      width: 48,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 48,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 48,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 24, right: 16, left: 16),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: DesignCourseAppTheme.grey
-                                      .withOpacity(0.2),
-                                  offset: const Offset(0.0, 0.0),
-                                  blurRadius: 6.0),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16.0)),
-                            child: AspectRatio(
-                                aspectRatio: 1.28,
-                                child: Image.asset(category!.imagePath)),
+                      Container(
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.only(top: 24, right: 16, left: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              const BorderRadius.all(Radius.circular(16.0)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: DesignCourseAppTheme.grey
+                                        .withOpacity(0.2),
+                                    offset: const Offset(0.0, 0.0),
+                                    blurRadius: 6.0),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius:
+                              const BorderRadius.all(Radius.circular(16.0)),
+                              child: AspectRatio(
+                                  aspectRatio: 1.28,
+                                  child: Image.asset(category!.imagePath)),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ),
           ),
         );

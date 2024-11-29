@@ -49,12 +49,12 @@ class _CategoryListViewState extends State<CategoryListView>
               return ListView.builder(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: Category.categoryList.length,
+                itemCount: Category.popularCourseList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = Category.categoryList.length > 10
+                  final int count = Category.popularCourseList.length > 10
                       ? 10
-                      : Category.categoryList.length;
+                      : Category.popularCourseList.length;
                   final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -64,7 +64,7 @@ class _CategoryListViewState extends State<CategoryListView>
                   animationController?.forward();
 
                   return CategoryView(
-                    category: Category.categoryList[index],
+                    category: Category.popularCourseList[index],
                     animation: animation,
                     animationController: animationController,
                     callback: widget.callBack,
