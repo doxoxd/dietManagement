@@ -1,4 +1,8 @@
 // 식단 기록한 거 보여주는 부분
+import 'package:http/http.dart' as http;
+
+import '../../api/api.dart';
+
 
 class MealsListData {
   MealsListData({

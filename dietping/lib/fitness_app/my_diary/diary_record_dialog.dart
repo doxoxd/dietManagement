@@ -3,7 +3,9 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/food_search_dialo
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../api/api.dart';
 import 'food_add_dialog.dart';
+import 'package:http/http.dart' as http;
 
 class DiaryRecordDialog extends StatefulWidget {
   const DiaryRecordDialog({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
   XFile? selectedImage; // 선택된 이미지 파일
   List<XFile> selectedImages = []; // 선택된 이미지 목록
   final ImagePicker picker = ImagePicker(); // 이미지 선택 도구
+  List<List<dynamic>> addedFoods = [];
 
   // 갤러리 또는 카메라에서 이미지 선택
   Future<void> _selectMultipleImages() async {
@@ -48,19 +51,34 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
       print("이미지 선택 중 오류 발생: $e");
     }
   }
-  /*Future<void> getImage(ImageSource imageSource) async {
-    final XFile? pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile != null) {
-      setState(() {
-        selectedImage = XFile(pickedFile.path); // 가져온 이미지를 저장
-      });
+
+/*
+  Future<void> diarySave({required bool withImage}) async {
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(API.insertMenu));
+
+
     }
-  }*/
+  }
+*/
+
 
   // 이미지 삭제
   void _removeImage(int index) {
     setState(() {
       selectedImages.removeAt(index);
+    });
+  }
+
+  void _addFood(List<dynamic> food) {
+    setState(() {
+      addedFoods.add(food);
+    });
+  }
+
+  void _removeFood(int index) {
+    setState(() {
+      addedFoods.removeAt(index);
     });
   }
 
@@ -192,48 +210,6 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                   ),
                 ],
               ),
-            /*if (selectedImage != null)
-              Center(
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(selectedImage!.path),
-                        width: 200,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: _removeImage,
-                      icon: Icon(Icons.close, color: Colors.red),
-                      tooltip: "이미지 삭제",
-                    ),
-                  ],
-                ),
-              )
-            else
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildIconCard(
-                    icon: Icons.camera_alt,
-                    label: "사진 촬영",
-                    onPressed: () {
-                      getImage(ImageSource.camera); // 카메라로 사진 촬영
-                    },
-                  ),
-                  _buildIconCard(
-                    icon: Icons.photo_library,
-                    label: "앨범 선택",
-                    onPressed: () {
-                      getImage(ImageSource.gallery); // 갤러리에서 사진 선택
-                    },
-                  ),
-                ],
-              ),*/
             const SizedBox(height: 24),
 
             // 영양성분 섹션
@@ -258,9 +234,16 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                           topRight: Radius.circular(16),
                         ),
                       ),
-                      // isScrollControlled: true, // 다이얼로그 높이를 키보드와 연동
+                      isScrollControlled: true, // 다이얼로그 높이를 키보드와 연동
                       builder: (BuildContext context) {
-                        return FoodAddDialog(); // FoodAddDialog 호출
+                        return FoodAddDialog(
+                          onFoodAdded: (List<dynamic> newFood) {
+                            // 직접 추가한 음식 추가
+                            setState(() {
+                              addedFoods.add(newFood);
+                            });
+                          },
+                        );
                       },
                     );
                   },
@@ -269,7 +252,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                   icon: Icons.search,
                   label: "음식 검색",
                   onPressed: () {
-                    // "음식 검색" 선택 시 FoodRecordDialog 표시
+                    // "음식 검색" 선택 시 FoodSearchDialog 표시
                     showModalBottomSheet(
                       context: context,
                       shape: RoundedRectangleBorder(
@@ -278,7 +261,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                           topRight: Radius.circular(16),
                         ),
                       ),
-                      // isScrollControlled: true, // 다이얼로그 높이를 키보드와 연동
+                      isScrollControlled: true, // 다이얼로그 높이를 키보드와 연동
                       builder: (BuildContext context) {
                         return FoodSearchDialog(
                           onDirectAdd: () {
@@ -289,7 +272,13 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                           onSearch: (String searchText) {
                             // 검색 동작 처리
                             print("검색된 텍스트: $searchText");
-                            Navigator.pop(context); // 다이얼로그 닫기
+                          },
+                          onFoodAdded: (food) {
+                            // 검색된 음식 추가
+                            setState(() {
+                              addedFoods.add(food);
+                            });
+                            // Navigator.pop(context); // 다이얼로그 닫기
                           },
                         );
                       },
@@ -298,9 +287,34 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            // 추가된 음식 리스트
+            if (addedFoods.isNotEmpty)
+              Expanded(
+                child: ListView.builder(
+                  itemCount: addedFoods.length,
+                  itemBuilder: (context, index) {
+                    final food = addedFoods[index];
+                    return ListTile(
+                      title: Text(food[1]), // 음식 이름
+                      subtitle: Text(
+                          '칼로리: ${food[2]} Kcal | 탄수화물: ${food[3]}g | 당: ${food[4]}g | 지방: ${food[5]}g | 단백질: ${food[6]}g | 나트륨: ${food[7]}mg'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          setState(() {
+                            addedFoods.removeAt(index);
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              )
+            else
+              Center(child: Text("추가된 음식이 없습니다.")),
 
-            const Spacer(),
-
+            const SizedBox(height: 16),
             // 저장 버튼
             Center(
               child: ElevatedButton(
@@ -335,7 +349,7 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
     );
   }
 
-  void _showFoodRecordDialog() {
+  /*void _showFoodRecordDialog() {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -356,13 +370,20 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
           onSearch: (String searchText) {
             Navigator.pop(context);
             // 검색 동작
-            // 검색 동작
             print("검색어 입력: $searchText");
+          },
+          onFoodAdded: (List<dynamic> food) {
+            // 검색된 음식 추가 처리
+            setState(() {
+              addedFoods.add(food); // 검색된 음식 추가
+            });
+            Navigator.pop(context); // 다이얼로그 닫기
+            print("음식 추가됨: $food");
           },
         );
       },
     );
-  }
+  }*/
 
   Widget _buildIconCard({
     required IconData icon,
