@@ -16,7 +16,6 @@ class User{
   User(this.user_id,  this.user_name, this.user_email, this.user_password,this.user_nickname, this.user_age, this.user_gender, this.user_kcal, this.user_height, this.user_weight);
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    //int.parse(json['idx']),
     json['id'] ?? 'unknown',
     json['name'] ?? 'unknown',
     json['email'] ?? 'unknown',
@@ -24,10 +23,11 @@ class User{
     json['nickname'] ?? 'unknown',
     json['age'] ?? 0,
     json['gender'] ?? 'unknown',
-    json['kcal'] ?? 0.0,
-    json['height'] ?? 0.0,
-    json['weight'] ?? 0.0,
+    double.tryParse(json['kcal']?.toString() ?? '0.0') ?? 0.0, // 문자열 -> double 변환
+    double.tryParse(json['height']?.toString() ?? '0.0') ?? 0.0,
+    double.tryParse(json['weight']?.toString() ?? '0.0') ?? 0.0,
   );
+
 
   Map<String, dynamic> toJson()=> { // 키네임 , 밸류값
     //'idx' : user_idx.toString(),

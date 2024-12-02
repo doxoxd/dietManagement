@@ -1,25 +1,39 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/food_search_dialog.dart';
+import 'package:best_flutter_ui_templates/model/loaduser.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../api/api.dart';
+import '../../model/user.dart';
+import '../fitness_app_theme.dart';
 import 'food_add_dialog.dart';
 import 'package:http/http.dart' as http;
 
+import 'my_diary_screen.dart';
+
 class DiaryRecordDialog extends StatefulWidget {
-  const DiaryRecordDialog({Key? key}) : super(key: key);
+  final DateTime selectedDate;
+  // final String? userid;
+
+  const DiaryRecordDialog({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   _DiaryRecordDialogState createState() => _DiaryRecordDialogState();
 }
 
 class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
+
+  AnimationController? animationController;
   String selectedCategory = "아침"; // 기본 선택
   XFile? selectedImage; // 선택된 이미지 파일
   List<XFile> selectedImages = []; // 선택된 이미지 목록
   final ImagePicker picker = ImagePicker(); // 이미지 선택 도구
   List<List<dynamic>> addedFoods = [];
+  String? userId;
+  List<XFile?> images = []; // 가져온 사진들을 보여주기 위한 변수
 
   // 갤러리 또는 카메라에서 이미지 선택
   Future<void> _selectMultipleImages() async {
@@ -52,15 +66,194 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
     }
   }
 
-/*
   Future<void> diarySave({required bool withImage}) async {
+    User? user = await LoadUser.loadUser();
+    userId = user?.user_id;
+
+    if (userId == null) {
+      Fluttertoast.showToast(msg: "유저 ID를 찾을 수 없습니다.");
+      return;
+    }
+
+    double totalCalories = 0;
+    double totalCarbs = 0;
+    double totalSugar = 0;
+    double totalFat = 0;
+    double totalProtein = 0;
+    double totalSodium = 0;
+
     try {
-      var request = http.MultipartRequest('POST', Uri.parse(API.insertMenu));
+      final url = Uri.parse(API.insertMenu);
 
+      // MultipartRequest 생성
+      var request = http.MultipartRequest('POST', url);
+      request.fields['id'] = userId!;
+      request.fields['selectedCategory'] = selectedCategory;
+      request.fields['selectedDate'] = widget.selectedDate.toIso8601String();
 
+      // 음식 데이터 추가
+      for (var food in addedFoods) {
+        request.fields['food_id'] = food[0].toString();
+        request.fields['food_name'] = food[1].toString();
+        request.fields['calories'] = food[2].toString();
+        request.fields['carbs'] = food[3].toString();
+        request.fields['sugar'] = food[4].toString();
+        request.fields['fat'] = food[5].toString();
+        request.fields['protein'] = food[6].toString();
+        request.fields['sodium'] = food[7].toString();
+
+        // 영양소 합산
+        totalCalories += food[2];
+        totalCarbs += food[3];
+        totalSugar += food[4];
+        totalFat += food[5];
+        totalProtein += food[6];
+        totalSodium += food[7];
+      }
+
+      // 이미지 추가
+      if (withImage) {
+        for (var img in selectedImages) {
+          request.files.add(await http.MultipartFile.fromPath('images', img.path));
+        }
+      }
+      print(request);
+      // 요청 보내기
+      var response = await request.send();
+      print(response);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "데이터 저장 성공");
+      } else {
+        Fluttertoast.showToast(msg: "서버 오류: ${response.statusCode}");
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "저장 중 오류 발생: $e");
+    }
+
+    // 총 영양소 업데이트
+    await _updateDailyNutrition(
+      calories: totalCalories,
+      carbs: totalCarbs,
+      sugar: totalSugar,
+      fat: totalFat,
+      protein: totalProtein,
+      sodium: totalSodium,
+    );
+  }
+
+  Future<void> _updateDailyNutrition({
+    required double calories,
+    required double carbs,
+    required double sugar,
+    required double fat,
+    required double protein,
+    required double sodium,
+  }) async {
+    try {
+      final url = Uri.parse(API.updateUserDiary);
+
+      final response = await http.post(
+        url,
+        body: {
+          'userid': userId,
+          'date': widget.selectedDate.toIso8601String(),
+          'tcal': calories.toString(),
+          'tcarbs': carbs.toString(),
+          'tsugar': sugar.toString(),
+          'tfat': fat.toString(),
+          'tprotein': protein.toString(),
+          'tsodium': sodium.toString(),
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        if (jsonResponse['success'] == true) {
+          Fluttertoast.showToast(msg: "하루 영양소 기록 성공");
+        } else {
+          Fluttertoast.showToast(msg: "하루 영양소 기록 실패");
+        }
+      } else {
+        Fluttertoast.showToast(msg: "HTTP 오류: ${response.statusCode}");
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "하루 영양소 기록 중 오류 발생");
     }
   }
-*/
+
+/*  Future<void> diarySave({required bool withImage}) async {
+    User? user = await LoadUser.loadUser();
+    userId = user?.user_id;
+
+    if (userId == null) {
+      Fluttertoast.showToast(msg: "유저 ID를 찾을 수 없습니다.");
+      return;
+    }
+
+    for (var food in addedFoods) {
+      try {
+        // 서버 URL
+        final url = Uri.parse(API.insertMenu);
+
+        // 이미지 데이터를 Base64로 인코딩
+        List<String> encodedImages = [];
+        if (withImage) {
+          for (var img in selectedImages) {
+            final bytes = await File(img.path).readAsBytes();
+            final base64Image = base64Encode(bytes);
+            encodedImages.add(base64Image);
+          }
+        }
+
+        // JSON 데이터 생성
+        Map<String, dynamic> jsonData = {
+          'id': userId, // 유저 ID
+          'selectedCategory': selectedCategory, // 선택한 카테고리
+          'selectedDate': widget.selectedDate.toIso8601String(), // 선택한 날짜
+          'food': {
+            'id': food[0], // 음식 ID
+            'name': food[1], // 음식 이름
+            'calories': food[2], // 칼로리
+            'carbs': food[3], // 탄수화물
+            'sugar': food[4], // 당
+            'fat': food[5], // 지방
+            'protein': food[6], // 단백질
+            'sodium': food[7], // 나트륨
+          },
+          'images': encodedImages, // Base64로 인코딩된 이미지 목록
+        };
+
+        print(jsonData);
+
+        // 요청 전송
+        final response = await http.post(
+          url,
+          headers: {
+            'Content-Type': 'application/json', // 헤더에 Content-Type 추가
+          },
+          body: jsonEncode({
+            'diary': jsonData,
+          }),
+        );
+
+        // 응답 처리
+        if (response.statusCode == 200) {
+          var jsonResponse = jsonDecode(response.body);
+          if (jsonResponse['result'] == 'true') {
+            Fluttertoast.showToast(msg: "음식 '${food[1]}' 저장 성공");
+          } else {
+            Fluttertoast.showToast(
+                msg: "음식 '${food[1]}' 저장 실패: ${jsonResponse['message']}");
+          }
+        } else {
+          Fluttertoast.showToast(msg: "HTTP 오류: ${response.statusCode}");
+        }
+      } catch (e) {
+        print(e.toString());
+        Fluttertoast.showToast(msg: "음식 '${food[1]}' 저장 중 오류 발생: $e");
+      }
+    }
+  }*/
 
 
   // 이미지 삭제
@@ -107,16 +300,23 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 제목
-            Center(
-              child: Text(
-                "${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일 식단",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF0066CC),
+            // 제목과 닫기 버튼을 Row로 감싸기
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일 식단",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0066CC),
+                  ),
                 ),
-              ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("닫기", style: TextStyle(color: Colors.grey)),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
 
@@ -318,15 +518,9 @@ class _DiaryRecordDialogState extends State<DiaryRecordDialog> {
             // 저장 버튼
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  print("음식명: ${foodNameController.text}");
-                  print("분류: $selectedCategory");
-                  if (selectedImage != null) {
-                    print("저장된 이미지 경로: ${selectedImage!.path}");
-                  } else {
-                    print("이미지가 선택되지 않았습니다.");
-                  }
-                  Navigator.pop(context);
+                onPressed: () async {
+                  await diarySave(withImage: selectedImages.isNotEmpty);
+
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0066CC),

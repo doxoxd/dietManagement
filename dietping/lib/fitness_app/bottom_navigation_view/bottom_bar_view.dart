@@ -170,7 +170,7 @@ class _BottomBarViewState extends State<BottomBarView>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddRecipe(), // 이동할 페이지
+                                builder: (context) => AddRecipeinfo(), // 이동할 페이지
                               ),
                             );
                           },

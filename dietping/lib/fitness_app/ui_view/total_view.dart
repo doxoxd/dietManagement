@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:math' as math;
 
 import '../../model/loaduser.dart';
+import '../../model/user.dart';
 
 class TotalView extends StatefulWidget {
   final AnimationController? animationController;
@@ -24,34 +25,68 @@ class TotalView extends StatefulWidget {
 }
 
 class _TotalViewState extends State<TotalView> {
-  Map<String, dynamic>? userData;
+  // Map<String, dynamic>? userData;
   String? userId;
-  // DateTime? selectedDay;
+  double? userKcal;
   List<List<dynamic>> data = [];
 
+  @override
+  void initState() {
+    super.initState();
+    loadUserDiary(); // initState에서 서버 요청 함수 호출
+  }
+
+  @override
+  void didUpdateWidget(covariant TotalView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedDate != widget.selectedDate) {
+      // 날짜가 변경되었을 때만 데이터를 다시 로드
+      loadUserDiary();
+    }
+  }
+
+  // 다이어리 데이터를 로드하는 함수
   void loadUserDiary() async {
-    userData = (await LoadUser.loadUser()) as Map<String, dynamic>?;
-    userId = userData?['id'];
+    User? user = await LoadUser.loadUser();
+
+    if (user == null) {
+      Fluttertoast.showToast(msg: '사용자 정보를 불러올 수 없습니다.');
+      return;
+    }
+
+    userId = user.user_id;
+    userKcal = user.user_kcal;
 
     try {
       var res = await http.post(
-          Uri.parse(API.loadUserDiary),
-          body: {
-            'id': userId,
-          }
+        Uri.parse(API.loadUserDiary),
+        body: {
+          'id': userId,
+          'selectedDate': widget.selectedDate.toIso8601String(),
+        },
       );
+
       if (res.statusCode == 200) {
         var resLoadD = jsonDecode(res.body);
-        if (resLoadD['diary'] == 'true') {
-          data = (resLoadD['diary_info'] as List).cast<List<dynamic>>();
-          setState(() {});
+        if (resLoadD['recordexist'] == 'true') {
+          setState(() {
+            data = (resLoadD['diary_info'] as List).cast<List<dynamic>>();
+          });
         } else {
-          Fluttertoast.showToast(msg: '');
+          setState(() {
+            data = []; // 데이터가 없을 경우 초기화
+          });
+          Fluttertoast.showToast(msg: '다이어리 정보를 불러올 수 없습니다.');
         }
+      } else {
+        Fluttertoast.showToast(
+          msg: '서버 오류: ${res.statusCode}',
+          toastLength: Toast.LENGTH_LONG,
+        );
       }
     } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(msg: e.toString());
+      print('데이터 로드 오류: $e');
+      Fluttertoast.showToast(msg: '데이터 로드 중 오류 발생');
     }
   }
 
@@ -62,8 +97,8 @@ class _TotalViewState extends State<TotalView> {
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: widget.animation!,
-          child: new Transform(
-            transform: new Matrix4.translationValues(
+          child: Transform(
+            transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - widget.animation!.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
@@ -71,16 +106,15 @@ class _TotalViewState extends State<TotalView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(8.0)),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8.0),
+                  ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
-                        offset: Offset(0.5, 0.5),
-                        blurRadius: 10.0),
+                      color: FitnessAppTheme.grey.withOpacity(0.2),
+                      offset: const Offset(0.5, 0.5),
+                      blurRadius: 10.0,
+                    ),
                   ],
                 ),
                 child: Column(
@@ -152,7 +186,7 @@ class _TotalViewState extends State<TotalView> {
                                                   const EdgeInsets.only(
                                                       left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(1175 * widget.animation!.value).toInt()}',
+                                                    '${(data.isNotEmpty ? data[0][2] * widget.animation!.value : 0).toInt()}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -253,7 +287,7 @@ class _TotalViewState extends State<TotalView> {
                                                   const EdgeInsets.only(
                                                       left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(64 * widget.animation!.value).toInt()}',
+                                                    '${(data.isNotEmpty ? data[0][3] * widget.animation!.value : 0).toStringAsFixed(2)}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -328,7 +362,9 @@ class _TotalViewState extends State<TotalView> {
                                         CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            '${(425 * widget.animation!.value).toInt()}',
+                                            '${data.isNotEmpty && userKcal != null
+                                                ? (userKcal! - ((data[0][2] as num?) ?? 0)) * widget.animation!.value
+                                                : userKcal ?? 0}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
@@ -366,9 +402,9 @@ class _TotalViewState extends State<TotalView> {
                                             HexColor("#8A98E8"),
                                             HexColor("#8A98E8")
                                           ],
-                                          angle: 260 +
+                                          angle: 500 +
                                               (360 - 260) *
-                                                  (1.0 - widget.animation!.value)),
+                                                  (0.0 - widget.animation!.value)),
                                       child: SizedBox(
                                         width: 108,
                                         height: 108,
@@ -430,7 +466,10 @@ class _TotalViewState extends State<TotalView> {
                                     child: Row(
                                       children: <Widget>[
                                         Container(
-                                          width: ((70 / 1) * widget.animation!.value),
+                                          // width: ((70 / 1) * widget.animation!.value),
+                                          width: data.isNotEmpty
+                                              ? (data[0][4] / 50) * 70 * widget.animation!.value
+                                              : 0, // 최대값 100 기준으로 비율 계산
                                           height: 4,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(colors: [
@@ -449,7 +488,7 @@ class _TotalViewState extends State<TotalView> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
                                   child: Text(
-                                    '134g',
+                                    '${(data.isNotEmpty ? data[0][4] * widget.animation!.value : 0).toStringAsFixed(2)}g',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: FitnessAppTheme.fontName,
@@ -497,8 +536,9 @@ class _TotalViewState extends State<TotalView> {
                                         child: Row(
                                           children: <Widget>[
                                             Container(
-                                              width: ((70 / 1) *
-                                                  widget.animationController!.value),
+                                              width: data.isNotEmpty
+                                                  ? (data[0][5] / 50) * 70 * widget.animation!.value
+                                                  : 0, // 최대값 100 기준으로 비율 계산
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:
@@ -518,7 +558,7 @@ class _TotalViewState extends State<TotalView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '27g',
+                                        '${(data.isNotEmpty ? data[0][5] * widget.animation!.value : 0).toStringAsFixed(2)}g',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -568,8 +608,9 @@ class _TotalViewState extends State<TotalView> {
                                         child: Row(
                                           children: <Widget>[
                                             Container(
-                                              width: ((70 / 1) *
-                                                  widget.animationController!.value),
+                                              width: data.isNotEmpty
+                                                  ? (data[0][6] / 60) * 70 * widget.animation!.value
+                                                  : 0, // 최대값 100 기준으로 비율 계산
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:
@@ -589,7 +630,7 @@ class _TotalViewState extends State<TotalView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '0.63g',
+                                        '${(data.isNotEmpty ? data[0][6] * widget.animation!.value : 0).toStringAsFixed(2)}g',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -639,8 +680,9 @@ class _TotalViewState extends State<TotalView> {
                                         child: Row(
                                           children: <Widget>[
                                             Container(
-                                              width: ((70 / 1) *
-                                                  widget.animationController!.value),
+                                              width: data.isNotEmpty
+                                                  ? (data[0][7] / 1500) * 70 * widget.animation!.value
+                                                  : 0, // 최대값 100 기준으로 비율 계산
                                               height: 4,
                                               decoration: BoxDecoration(
                                                 gradient:
@@ -660,7 +702,7 @@ class _TotalViewState extends State<TotalView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '27mg',
+                                        '${(data.isNotEmpty ? data[0][7] * widget.animation!.value : 0).toStringAsFixed(2)}mg',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -698,101 +740,37 @@ class CurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    List<Color> colorsList = [];
-    if (colors != null) {
-      colorsList = colors ?? [];
-    } else {
-      colorsList.addAll([Colors.white, Colors.white]);
-    }
+    // Colors for the gradient
+    List<Color> colorsList = colors ?? [Colors.blue, Colors.blue];
 
-    final shdowPaint = new Paint()
-      ..color = Colors.black.withOpacity(0.4)
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 14;
-    final shdowPaintCenter = new Offset(size.width / 2, size.height / 2);
-    final shdowPaintRadius =
-        math.min(size.width / 2, size.height / 2) - (14 / 2);
-    canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
-        degreeToRadians(278),
-        degreeToRadians(360 - (365 - angle!)),
-        false,
-        shdowPaint);
-
-    shdowPaint.color = Colors.grey.withOpacity(0.3);
-    shdowPaint.strokeWidth = 16;
-    canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
-        degreeToRadians(278),
-        degreeToRadians(360 - (365 - angle!)),
-        false,
-        shdowPaint);
-
-    shdowPaint.color = Colors.grey.withOpacity(0.2);
-    shdowPaint.strokeWidth = 20;
-    canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
-        degreeToRadians(278),
-        degreeToRadians(360 - (365 - angle!)),
-        false,
-        shdowPaint);
-
-    shdowPaint.color = Colors.grey.withOpacity(0.1);
-    shdowPaint.strokeWidth = 22;
-    canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
-        degreeToRadians(278),
-        degreeToRadians(360 - (365 - angle!)),
-        false,
-        shdowPaint);
-
-    final rect = new Rect.fromLTWH(0.0, 0.0, size.width, size.width);
-    final gradient = new SweepGradient(
+    // Gradient configuration
+    final rect = Rect.fromLTWH(0.0, 0.0, size.width, size.height);
+    final gradient = SweepGradient(
       startAngle: degreeToRadians(268),
-      endAngle: degreeToRadians(270.0 + 360),
-      tileMode: TileMode.repeated,
+      endAngle: degreeToRadians(268 + 360),
+      tileMode: TileMode.clamp,
       colors: colorsList,
     );
-    final paint = new Paint()
+
+    // Paint for the circular arc
+    final paint = Paint()
       ..shader = gradient.createShader(rect)
-      ..strokeCap = StrokeCap.round // StrokeCap.round is not recommended.
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 14;
-    final center = new Offset(size.width / 2, size.height / 2);
-    final radius = math.min(size.width / 2, size.height / 2) - (14 / 2);
+      ..strokeWidth = 6 // Set the stroke width for a thin circle
+      ..strokeCap = StrokeCap.round;
 
+    // Center and radius for the circle
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = math.min(size.width / 2, size.height / 2) - 6;
+
+    // Draw the arc
     canvas.drawArc(
-        new Rect.fromCircle(center: center, radius: radius),
-        degreeToRadians(278),
-        degreeToRadians(360 - (365 - angle!)),
-        false,
-        paint);
-
-    final gradient1 = new SweepGradient(
-      tileMode: TileMode.repeated,
-      colors: [Colors.white, Colors.white],
+      Rect.fromCircle(center: center, radius: radius),
+      degreeToRadians(278), // Start angle
+      degreeToRadians(360 - (365 - angle!)), // Sweep angle
+      false, // Use an arc, not a filled shape
+      paint,
     );
-
-    var cPaint = new Paint();
-    cPaint..shader = gradient1.createShader(rect);
-    cPaint..color = Colors.white;
-    cPaint..strokeWidth = 14 / 2;
-    canvas.save();
-
-    final centerToCircle = size.width / 2;
-    canvas.save();
-
-    canvas.translate(centerToCircle, centerToCircle);
-    canvas.rotate(degreeToRadians(angle! + 2));
-
-    canvas.save();
-    canvas.translate(0.0, -centerToCircle + 14 / 2);
-    canvas.drawCircle(new Offset(0, 0), 14 / 5, cPaint);
-
-    canvas.restore();
-    canvas.restore();
-    canvas.restore();
   }
 
   @override
@@ -801,7 +779,6 @@ class CurvePainter extends CustomPainter {
   }
 
   double degreeToRadians(double degree) {
-    var redian = (math.pi / 180) * degree;
-    return redian;
+    return (math.pi / 180) * degree;
   }
 }

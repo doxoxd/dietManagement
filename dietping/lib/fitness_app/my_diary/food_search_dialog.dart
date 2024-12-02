@@ -40,6 +40,7 @@ class _FoodSearchDialogState extends State<FoodSearchDialog> {
       );
       if (res.statusCode == 200) {
         var resLoadD = jsonDecode(res.body);
+        print(resLoadD);
         if (resLoadD['result'] == 'true') {
           setState(() {
             searchResults = (resLoadD['food_info'] as List).cast<List<dynamic>>();
@@ -60,6 +61,9 @@ class _FoodSearchDialogState extends State<FoodSearchDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // MediaQuery를 사용하여 부모 다이얼로그의 높이 계산
+    final double parentHeight = MediaQuery.of(context).size.height * 0.92;
+
     return Theme(
       data: ThemeData.light().copyWith(
         primaryColor: Color(0xFF759CE6),
@@ -73,6 +77,7 @@ class _FoodSearchDialogState extends State<FoodSearchDialog> {
         ),
       ),
       child: Container(
+        height: parentHeight, // 부모 다이얼로그의 높이와 동일하게 설정
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -82,8 +87,6 @@ class _FoodSearchDialogState extends State<FoodSearchDialog> {
         ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "음식 검색",
@@ -139,7 +142,7 @@ class _FoodSearchDialogState extends State<FoodSearchDialog> {
                     return ListTile(
                       title: Text(food[1]),
                       subtitle: Text(
-                          '칼로리: ${food[2]} Kcal | 탄수화물: ${food[3]}g | 단백질: ${food[4]}g | 지방: ${food[5]}g'),
+                          '칼로리: ${food[2]} Kcal | 탄수화물: ${food[3]}g | 당: ${food[4]}g | 지방: ${food[5]}g | 단백질: ${food[6]}g | 나트륨: ${food[7]}mg'),
                       trailing: IconButton(
                         icon: Icon(Icons.add),
                         onPressed: () {

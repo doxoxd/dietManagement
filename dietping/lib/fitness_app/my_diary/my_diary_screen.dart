@@ -16,6 +16,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:image_picker/image_picker.dart';
 
 import '../../model/loaduser.dart';
+import '../../model/user.dart';
 import 'body_info_dialog.dart';
 import 'food_search_dialog.dart';
 
@@ -81,35 +82,13 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
     super.initState();
   }
 
-  // 유저 ID를 서버에서 가져오는 메서드
-  Future<void> _loadUserId() async {
-    userData = (await LoadUser.loadUser()) as Map<String, dynamic>?;
-    userId = userData?['id'];
 
-    try {
-      var res = await http.post(
-          Uri.parse(API.loadUser),
-          body: {
-            'id': userId,
-          }
-      );
-      if (res.statusCode == 200) {
-        var resLoadD = jsonDecode(res.body);
-        if (resLoadD['result'] == 'true') {
-          setState(() {
-            data = (resLoadD['user_info'] as List).cast<List<dynamic>>();
-            print(data);
-          });
-          addAllListData(); // 유저 ID 로드 후 리스트 데이터 다시 추가
-        } else {
-          print("유저 정보 로드 실패");
-        }
-      } else {
-        print("HTTP 요청 실패");
-      }
-    } catch (e) {
-      print("에러 발생: $e");
-    }
+  Future<void> _loadUserId() async {
+    User? user = await LoadUser.loadUser();
+    setState(() {
+      userId = user?.user_id; // userId를 업데이트
+    });
+    print(user?.user_id);
   }
 
 
@@ -117,16 +96,19 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
   void _previousDay() {
     setState(() {
       selectedDate = selectedDate.subtract(Duration(days: 1));
+      _updateListViews(); // 날짜 변경 시 리스트뷰 업데이트
     });
   }
 
-  // 날짜를 다음 날로 변경
+// 날짜를 다음 날로 변경
   void _nextDay() {
     setState(() {
       selectedDate = selectedDate.add(Duration(days: 1));
+      _updateListViews(); // 날짜 변경 시 리스트뷰 업데이트
     });
   }
-  // 날짜 선택 위젯 표시
+
+// 날짜 선택 위젯 표시
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -137,11 +119,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color(0xFF759CE6), // 헤더 색상, 확인 버튼 색상
-            hintColor: Color(0xFF759CE6), // 캘린더 선택된 날짜 색상
+            primaryColor: Color(0xFF759CE6), // 헤더 색상
+            hintColor: Color(0xFF759CE6), // 선택된 날짜 색상
             colorScheme: ColorScheme.light(primary: Color(0xFF759CE6)),
             buttonTheme: ButtonThemeData(
-              textTheme: ButtonTextTheme.primary, // 확인, 취소 버튼 색상
+              textTheme: ButtonTextTheme.primary, // 확인/취소 버튼 색상
             ),
           ),
           child: child!,
@@ -152,8 +134,15 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        _updateListViews(); // 날짜 변경 시 리스트뷰 업데이트
       });
     }
+  }
+
+// 리스트뷰를 업데이트하는 메서드
+  void _updateListViews() {
+    listViews.clear(); // 기존 리스트뷰 초기화
+    addAllListData(); // 새로운 데이터를 기반으로 리스트뷰 생성
   }
 
   void addAllListData() {
@@ -245,6 +234,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
                 curve: Interval((1 / count) * 3, 1.0,
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController,
+        selectedDate: selectedDate, // 선택한 날짜만 전달
       ),
     );
     listViews.add(
@@ -463,7 +453,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'My Diary',
+                                  userId != null ? '$userId\'s Diary' : 'My Diary', // userId가 있으면 'userId Diary', 없으면 'My Diary'
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -586,8 +576,8 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
     );
   }*/
 
-  void _showTextRecordDialog() {
-    showModalBottomSheet(
+  void _showTextRecordDialog() async {
+    final bool? updated = await showModalBottomSheet<bool>(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -597,11 +587,17 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> {
       ),
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return DiaryRecordDialog(); // 다이얼로그 호출
+        return DiaryRecordDialog(selectedDate: selectedDate);
       },
     );
-  }
 
+    if (updated == true) {
+      // 다이얼로그에서 저장 성공 시 화면 새로고침
+      setState(() {
+        _updateListViews(); // 리스트 새로고침
+      });
+    }
+  }
 
   void _showBodyInfoDialog() {
     showModalBottomSheet(

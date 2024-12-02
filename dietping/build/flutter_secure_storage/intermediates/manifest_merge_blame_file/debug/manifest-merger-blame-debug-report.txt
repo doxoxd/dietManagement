@@ -4,12 +4,12 @@
 4    package="com.it_nomads.fluttersecurestorage" >
 5
 6    <uses-sdk
-6-->C:\Users\Owner\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
+6-->C:\Users\doxoxd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
 7        android:minSdkVersion="18"
-7-->C:\Users\Owner\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
+7-->C:\Users\doxoxd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
 8        android:targetSdkVersion="32"
-8-->C:\Users\Owner\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
+8-->C:\Users\doxoxd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:5-58
 9        tools:overrideLibrary="androidx.security" />
-9-->C:\Users\Owner\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:15-56
+9-->C:\Users\doxoxd\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-5.1.2\android\src\main\AndroidManifest.xml:5:15-56
 10
 11</manifest>
