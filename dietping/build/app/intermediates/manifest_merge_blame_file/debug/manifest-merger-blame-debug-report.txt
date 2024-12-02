@@ -12,8 +12,8 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->D:\AndroidStudioProjects\tmp\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:5-66
-14-->D:\AndroidStudioProjects\tmp\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:22-64
+14-->D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:5-66
+14-->D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\android\app\src\debug\AndroidManifest.xml:6:22-64
 15
 16    <permission
 16-->[androidx.core:core:1.10.1] C:\Users\doxoxd\.gradle\caches\transforms-3\d7e47c25bb0f616905778ae8d7e2df86\transformed\core-1.10.1\AndroidManifest.xml:22:5-24:47
@@ -84,43 +84,43 @@
 76            android:value="2" />
 77
 78        <provider
-78-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
+78-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-19:20
 79            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-79-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
+79-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-82
 80            android:authorities="com.example.best_flutter_ui_templates.flutter.image_provider"
-80-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
+80-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-74
 81            android:exported="false"
-81-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
+81-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-37
 82            android:grantUriPermissions="true" >
-82-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
+82-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:15:13-47
 83            <meta-data
-83-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
+83-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-18:75
 84                android:name="android.support.FILE_PROVIDER_PATHS"
-84-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
+84-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:17:17-67
 85                android:resource="@xml/flutter_image_picker_file_paths" />
-85-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
+85-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:18:17-72
 86        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
 87        <service
-87-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
+87-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33:19
 88            android:name="com.google.android.gms.metadata.ModuleDependencies"
-88-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
+88-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-78
 89            android:enabled="false"
-89-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
+89-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-36
 90            android:exported="false" >
-90-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
+90-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:24:13-37
 91            <intent-filter>
-91-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
+91-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-28:29
 92                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
-92-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
-92-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
+92-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:17-94
+92-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:27:25-91
 93            </intent-filter>
 94
 95            <meta-data
-95-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
+95-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-32:36
 96                android:name="photopicker_activity:0:required"
-96-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
+96-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:31:17-63
 97                android:value="" />
-97-->[:image_picker_android] D:\AndroidStudioProjects\tmp\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
+97-->[:image_picker_android] D:\AndroidStudioProjects\tlqkf\dietManagement\dietping\build\image_picker_android\intermediates\merged_manifest\debug\AndroidManifest.xml:32:17-33
 98        </service>
 99
 100        <uses-library

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\AndroidStudioProjects\\tmp\\dietManagement\\dietping\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\AndroidStudioProjects\\tlqkf\\dietManagement\\dietping\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\doxoxd\\.gradle\\caches\\transforms-3\\f8736defbdab66e6e336ac0477647d38\\transformed\\lifecycle-runtime-2.6.1\\res\\values\\values.xml",
@@ -38,25 +38,6 @@
                     }
                 },
                 {
-                    "source": "D:\\AndroidStudioProjects\\tmp\\dietManagement\\dietping\\android\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "134,777",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "426,937"
-                    },
-                    "to": {
-                        "startLines": "108,113",
-                        "startColumns": "4,4",
-                        "startOffsets": "6436,6733",
-                        "endLines": "112,115",
-                        "endColumns": "12,12",
-                        "endOffsets": "6728,6893"
-                    }
-                },
-                {
                     "source": "C:\\Users\\doxoxd\\.gradle\\caches\\transforms-3\\f32fb7f997762421ba1775a1430a3545\\transformed\\jetified-savedstate-1.2.1\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -71,6 +52,25 @@
                         "startOffsets": "5597",
                         "endColumns": "53",
                         "endOffsets": "5646"
+                    }
+                },
+                {
+                    "source": "D:\\AndroidStudioProjects\\tlqkf\\dietManagement\\dietping\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "137,791",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "433,953"
+                    },
+                    "to": {
+                        "startLines": "108,113",
+                        "startColumns": "4,4",
+                        "startOffsets": "6436,6733",
+                        "endLines": "112,115",
+                        "endColumns": "12,12",
+                        "endOffsets": "6728,6893"
                     }
                 },
                 {

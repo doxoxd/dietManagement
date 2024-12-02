@@ -1,4 +1,4 @@
-#Mon Dec 02 09:57:56 KST 2024
-base.0=D\:\\AndroidStudioProjects\\tmp\\dietManagement\\dietping\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Tue Dec 03 04:32:48 KST 2024
+base.0=D\:\\AndroidStudioProjects\\tlqkf\\dietManagement\\dietping\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

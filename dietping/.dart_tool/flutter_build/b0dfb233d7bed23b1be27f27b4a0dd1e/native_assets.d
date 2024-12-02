@@ -1,0 +1,1 @@
+ D:\\AndroidStudioProjects\\tlqkf\\dietManagement\\dietping\\.dart_tool\\flutter_build\\b0dfb233d7bed23b1be27f27b4a0dd1e\\native_assets.yaml: 
